@@ -19,34 +19,35 @@ for i in $APT_GET_PACKAGES; do
     sudo apt-get -y install $i || (echo -e "${RED}Failed to install $i${NC}" && exit 1)
     echo -e "${GREEN}Installed $i${NC}"
 done
+
 #installing chrome
-echo "Installing Chrome"
-cd ~/Downloads
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo dpkg -i google-chrome-stable_current_amd64.deb
-rm goo* #cleaning up
+#echo "Installing Chrome"
+#cd ~/Downloads
+#wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+#sudo dpkg -i google-chrome-stable_current_amd64.deb
+#rm goo* #cleaning up
 #installing discord
-echo "Installing Discord"
-cd ~/Downloads
-wget -O discord.deb "https://discordapp.com/api/download?platform=linux&format=deb"
-sudo dpkg -i discord.deb
-rm discord.deb
+#echo "Installing Discord"
+#cd ~/Downloads
+#wget -O discord.deb "https://discordapp.com/api/download?platform=linux&format=deb"
+#sudo dpkg -i discord.deb
+#3rm discord.deb
 
 #install oh my zsh
-yes | sudo sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+#3yes | sudo sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 #install plugins
-sudo git clone https://github.com/zdharma/fast-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
-sudo git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-sudo sed -i ../.zshrc -e '71s!plugins=(git)!plugins=(git fast-syntax-highlighting zsh-autosuggestions)!'
+#sudo git clone https://github.com/zdharma/fast-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
+#sudo git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+#sudo sed -i ../.zshrc -e '71s!plugins=(git)!plugins=(git fast-syntax-highlighting zsh-autosuggestions)!'
 #install themes
-cd ../.oh-my-zsh/custom/themes
-rm -f *
-rm -rf *
-sudo git clone https://github.com/denysdovhan/spaceship-prompt ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/spaceship-prompt
-sudo ln -sf "spaceship-prompt/spaceship.zsh-theme" "spaceship.zsh-theme"
-sudo sed -i ~/.zshrc -e '11s!ZSH_THEME="robbyrussell"!ZSH_THEME="spaceship"!'
-sudo chsh -s $(which zsh) #change default shell
-source ~/.zshrc #done with zsh
+#cd ../.oh-my-zsh/custom/themes
+#rm -f *
+#rm -rf *
+#sudo git clone https://github.com/denysdovhan/spaceship-prompt ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/spaceship-prompt
+#sudo ln -sf "spaceship-prompt/spaceship.zsh-theme" "spaceship.zsh-theme"
+#sudo sed -i ~/.zshrc -e '11s!ZSH_THEME="robbyrussell"!ZSH_THEME="spaceship"!'
+#sudo chsh -s $(which zsh) #change default shell
+#source ~/.zshrc #done with zsh
 
 #install gotop
 #cd ~/Downloads
