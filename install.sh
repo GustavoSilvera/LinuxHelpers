@@ -7,31 +7,37 @@ NC='\033[0m'
 
 # Able to exit when failing to install a package
 set -e
-#install dependencies
-echo -e "${BLUE} Starting installation process ${NC}"
-sudo apt-get -y -f install || (echo -e "${RED} Failed setup ${NC}" && exit 1)
-sudo apt-get -y update
-echo -e "${GREEN} Setup Complete ${NC}"
-#install pip packages
-APT_GET_PACKAGES="git emacs-nox gnome-tweaks zsh terminator tmux neofetch nautilus vim tree steam dconf-editor htop curl"
-echo -e "${CYAN}Using pip to install $PIP_PACKAGES ${NC}"
-for i in $APT_GET_PACKAGES; do
-    sudo apt-get -y install $i || (echo -e "${RED}Failed to install $i${NC}" && exit 1)
-    echo -e "${GREEN}Installed $i${NC}"
-done
 
-#installing chrome
-#echo "Installing Chrome"
-#cd ~/Downloads
-#wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-#sudo dpkg -i google-chrome-stable_current_amd64.deb
-#rm goo* #cleaning up
-#installing discord
-#echo "Installing Discord"
-#cd ~/Downloads
-#wget -O discord.deb "https://discordapp.com/api/download?platform=linux&format=deb"
-#sudo dpkg -i discord.deb
-#3rm discord.deb
+#preprocess installation
+echo -e "${CYAN}Starting installation process ${NC}"
+sudo apt --fix-broken -y install || (echo -e "${RED}Failed to fix broken install ${NC}" && exit 1)
+APT_GET_SETUP="install update autoremove upgrade autoclean"
+for i in $APT_GET_SETUP; do
+	sudo apt-get -y $i || (echo -e "${RED}Failed $i ${NC}" && exit 1)
+    	echo -e "${GREEN}Successfull $i ${NC}"
+done
+echo -e "${GREEN}Setup Complete ${NC}"
+
+#install apt-get packages
+APT_GET_PACKAGES="git emacs-nox gnome-tweaks zsh terminator tmux neofetch nautilus vim tree steam dconf-editor htop curl gcc"
+echo -e "${CYAN}Using apt-get to install $APT_GET_PACKAGES ${NC}"
+for i in $APT_GET_PACKAGES; do
+    	sudo apt-get -y install $i || (echo -e "${RED}Failed to install $i${NC}" && exit 1)
+	echo -e "${GREEN}Installed $i${NC}"
+done
+echo -e "${GREEN}Successfully installed all apt-get packages${NC}"
+
+#install .deb packages
+DEB_PACKAGES="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb https://discordapp.com/api/download?platform=linux&format=deb"
+echo -e "${CYAN}Using downloading and installing $DEB_PACKAGES ${NC}"
+for i in $DEB_PACKAGES; do
+    	wget -O install_deb.deb $i || (echo -e "${RED}Failed to download $i ${NC}" && exit 1)
+	sudo dpkg -i install_deb.deb || (echo -e "${RED}Failed to install $i ${NC}" && exit 1)
+	rm install_deb.deb
+	sudo apt --fix-broken install || (echo -e "${RED}Failed to fix broken install ${NC}" && exit 1)
+	echo -e "${GREEN}Installed $i ${NC}"
+done
+echo -e "${GREEN}Successfully installed all deb packages${NC}"
 
 #install oh my zsh
 #3yes | sudo sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
