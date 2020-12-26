@@ -1,0 +1,10 @@
+#!/bin/sh
+# Xsetup - run as root before the login dialog appears
+
+if [ -e /sbin/prime-offload ]; then
+    echo running NVIDIA Prime setup /sbin/prime-offload
+    /sbin/prime-offload
+fi
+
+# set up monitors (custom)
+xrandr --output DP-0 --mode 3840x2160 --pos 0x0 --rotate normal --output DP-2 --mode 3840x2160 --pos 3840x0 --rotate normal --output DP-4 3840x2160 --pos 7680x0 --rotate normal
