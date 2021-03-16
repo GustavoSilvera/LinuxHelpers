@@ -32,4 +32,13 @@ This can be verified with:
 cat /proc/sys/fs/inotify/max_user_watches
 ```
 
-**Also**, can try 
+## Changing `ulimit`
+Edit the file `/etc/security/limits.conf` by adding lines:
+```
+* soft nofile 2097152
+* hard nofile 2097152
+root soft nofile 2097152
+root hard nofile 2097152
+session required pam_limits.so
+```
+at the end. 
